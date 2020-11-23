@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>下载</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″ />
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body style="visibility: hidden">
+  <div class="downloadApp">
+    <div class="ios">
+      <img class="ios-btn" src="images/ios.png" width="80%">
+    </div>
+    <div class="android">
+      <img class="and-btn" src="images/android.png" width="80%">
+    </div>
+  </div>
+  <div class="bgModal hide"></div>
+  <script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+  <script src="js/market.js"></script>
+  <script>
+    $(function () {
+      regEvent();
+      getEventType3();
+      if (window.location.search && getQueryString('bg')) {
+        var _bg = getQueryString('bg')
+        $("body").css({
+          background: 'url(' + _bg + ') no-repeat',
+          backgroundSize: "100% 100%"
+        })
+      }
+      if (window.location.search && getQueryString('iosbtn')) {
+        var _iosbtn = getQueryString('iosbtn')
+        $(".ios-btn").attr({
+          src: _iosbtn
+        })
+      }
+      if (window.location.search && getQueryString('andbtn')) {
+        var _andbtn = getQueryString('andbtn')
+        $(".and-btn").attr({
+          src: _andbtn
+        })
+      }
+    });
+
+    function getQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return decodeURI(r[2]);
+      return null;
+    }
+
+    function regEvent() {
+      $("body").on("click", ".android", function () {
+        // alert(builtIn())
+        // if (builtIn()) $(".bgModal").removeClass();
+        // else window.location.href = '//fir.im/892h';
+        const partnerId = getQueryString("partnerId")
+        const customerId = getQueryString("customerId")
+        const PARAM = {
+          eventType: 2,
+          event: {
+            partnerId: Number(partnerId),
+            gmtDownloadTimestamp: (new Date()).getTime(),
+            customerId: Number(customerId),
+            os: navigator.userAgent.match(/Android/i) ? 1 : 2,
+          }
+        }
+        eventTracking_B(PARAM)
+      })
+      $("body").on("click", ".ios", function () {
+        window.location.href = 'guide.html?customerId=' + getQueryString("customerId") + '&partnerId=' +
+          getQueryString('partnerId');
+      })
+    };
+
+    function getEventType3() {
+      const partnerId = getQueryString("partnerId")
+      const customerId = getQueryString("customerId")
+      const PARAM = {
+        eventType: 3,
+        event: {
+          partnerId: Number(partnerId),
+          gmtTimestamp: (new Date()).getTime(),
+          customerId: Number(customerId),
+          os: navigator.userAgent.match(/Android/i) ? 1 : 2,
+        }
+      }
+      $.ajax({
+        url: '/app/h5/v1/partnerChannel/eventTracking',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(PARAM),
+        cache: false,
+        headers: {
+          'Content-Type': 'application/json' //application/x-www-form-urlencoded  application/json
+        }
+      })
+    };
+
+    //数据埋点
+    function eventTracking_B(param) {
+      $.ajax({
+        url: '/app/h5/v1/partnerChannel/eventTracking',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(param),
+        cache: false,
+        headers: {
+          'Content-Type': 'application/json' //application/x-www-form-urlencoded  application/json
+        },
+        success: function (res) {
+          // window.location.href = 'https://fapp.link/Wteq'; //跳转安卓下载地址
+          window.location.href = "http://dc-app-web.itkyd.com/package/android/kuaiyidai_fapp.apk";
+        },
+        error: function (err) {
+          // window.location.href = 'https://fapp.link/Wteq'; //跳转安卓下载地址
+          window.location.href = "http://dc-app-web.itkyd.com/package/android/kuaiyidai_fapp.apk";
+        }
+      })
+    };
+
+    function builtIn() {
+      var c = false;
+      var d = window.navigator.userAgent.toLowerCase();
+      if (d.match(/MicroMessenger/i) == "micromessenger") {
+        c = true
+      } else {
+        if (d.match(/Alipay/i) == "alipay") {
+          c = true
+        } else {
+          if (/\s+QQ/.test(window.navigator.userAgent)) {
+            c = true
+          } else {
+            c = false
+          }
+        }
+      }
+      return c
+    };
+  </script>
+</body>
+
+</html>

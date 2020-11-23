@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>苹果手机安装引导</title>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″ />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    .box {
+      position: relative;
+      z-index: 1;
+      padding-bottom: .55rem;
+    }
+
+    .download {
+      height: 1.1rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: url("./images/btn_download.png") no-repeat center center;
+      background-size: 100%;
+      z-index: 1111;
+    }
+
+    .line {
+      width: 100%;
+      height: 1.1rem;
+    }
+
+    .img {
+      /* margin-bottom: .7rem; */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box">
+      <img class="img" src="images/bg_guide.png" width="100%">
+    </div>
+    <div class="download"></div>
+  </div>
+
+  <script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+  <script src="js/market.js"></script>
+  <script>
+    $(function () {
+      toDownload();
+    });
+
+    function toDownload() {
+      $(".download").on("click", function () {
+        const partnerId = getQueryString("partnerId")
+        const customerId = getQueryString("customerId")
+        const PARAM = {
+          eventType: 2,
+          event: {
+            partnerId: Number(partnerId),
+            gmtDownloadTimestamp: (new Date()).getTime(),
+            customerId: Number(customerId),
+            os: navigator.userAgent.match(/Android/i) ? 1 : 2,
+          }
+        }
+        eventTracking_C(PARAM)
+      })
+    };
+    //数据埋点
+    function eventTracking_C(param) {
+      let protocol = window.location.protocol;
+      let host = window.location.host;
+      $.ajax({
+        url: '/app/h5/v1/partnerChannel/eventTracking',
+        type: 'post',
+        dataType: 'json',
+        data: JSON.stringify(param),
+        cache: false,
+        headers: {
+          'Content-Type': 'application/json' //application/x-www-form-urlencoded  application/json
+        },
+        success: function (res) {
+          window.location.href =
+            "https://apps.apple.com/cn/app/77%E4%BF%A1%E7%94%A8-%E5%90%88%E8%A7%84%E9%87%91%E8%9E%8D%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/id1322305039";
+          // "itms-services://?action=download-manifest&url=https://dc-app-web.itkyd.com/package/ios/ios.plist"
+        },
+        error: function (err) {
+          window.location.href =
+            "https://apps.apple.com/cn/app/77%E4%BF%A1%E7%94%A8-%E5%90%88%E8%A7%84%E9%87%91%E8%9E%8D%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0/id1322305039";
+          // "itms-services://?action=download-manifest&url=https://dc-app-web.itkyd.com/package/ios/ios.plist"
+        }
+      })
+    };
+
+    function getQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return decodeURI(r[2]);
+      return null;
+    }
+  </script>
+</body>
+
+</html>
