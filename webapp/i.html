@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>展业帮-信贷经理的展业神器</title>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width-device-width,initial-scale=1.0,maximum-scale=1.0, minimum-scale=1.0,user-scalable=no, minimal-ui"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <style>
+    .shadow {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      opacity: 0.4;
+      display: none;
+    }
+
+    .toast {
+      display: none;
+      position: absolute;
+      z-index: 11111;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border-radius: 10px;
+      color: #333;
+      font-size: 0.4rem;
+      padding: 0.54rem 0.32rem;
+      width: 74%;
+      margin: 0 auto;
+    }
+
+    .toast a {
+      display: block;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .bg {
+      width: 100%;
+      height: auto;
+      left: 0;
+      top: 0;
+      position: relative;
+      max-width: 100%;
+    }
+
+    .container1 {
+      position: relative;
+    }
+
+    .btn_act {
+      opacity: 0.5;
+    }
+  </style>
+
+  <body>
+    <div class="container1">
+      <img class="bg" src="" alt="" />
+      <input
+        placeholder="请输入手机号"
+        class="mobilePhone"
+        type="number"
+        pattern="[0-9]*"
+        style="border: none"
+        onclick="changHeight()"
+      />
+      <input
+        class="codeInput"
+        placeholder="请输入验证码"
+        onKeypress="return (/[\d\.]/.test(String.fromCharCode(event.keyCode)))"
+        pattern="[0-9]*"
+        style="border: none"
+        onclick="changHeight()"
+      />
+      <div class="codeImg" data-param="btnCode">获取验证码</div>
+      <div class="timer hide">( <span>60</span> )</div>
+      <div class="register" data-param="btnRegister">立即注册</div>
+      <div class="tips hide"></div>
+      <div class="shadow"></div>
+      <div class="toast">
+        <p>如何安装</p>
+        <img src="./images/close_btn.png" alt="" class="btn_close" />
+        <p class="blue">安装不了？请看下面操作：</p>
+        <p class="item">
+          <span class="icon1"></span> 下载完“展业帮”后，打开手机【设置-通用】
+        </p>
+        <p class="item">
+          <span class="icon2"></span>【通用】页面点击【描述文件与设备管理】
+        </p>
+        <img class="bg1" src="./images/bg1.png" alt="" />
+        <p class="item">
+          <span class="icon3"></span> 点击【信任】后，就可以使用了！
+        </p>
+        <img class="bg2" src="./images/bg2.png" alt="" />
+        <p class="orage">请先确认app下载完成后，点击继续安装</p>
+        <p
+          class="btn"
+          data-href="https://fapplink.oss-cn-shanghai.aliyuncs.com/static/cp205_release.mobileprovision"
+        >
+          <a class="btn_href" href="javascript:void(0)">继续安装</a>
+        </p>
+        <div class="tips1 hide"></div>
+      </div>
+    </div>
+
+    <!-- <script src="//hzad-static.oss-cn-hangzhou.aliyuncs.com/js/market.js"></script>
+<script src="//hzad-static.oss-cn-hangzhou.aliyuncs.com/js/zepot.js"></script> -->
+    <!-- <script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script> -->
+    <script src="./js/zepto.js"></script>
+    <script src="./js/CryptoJS/rollups/tripledes.js"></script>
+    <script src="./js/CryptoJS/components/aes.js"></script>
+    <script src="./js/CryptoJS/components/pad-zeropadding-min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://www.jq22.com/demo/clipboard.js-master201703170013/dist/clipboard.min.js"
+    ></script>
+    <script src="https://cdn.bootcss.com/jsencrypt/3.0.0-beta.1/jsencrypt.js"></script>
+    <script src="js/market.js"></script>
+    <script src="js/i.js"></script>
+    <script>
+      function changHeight() {
+        var bodyHeight = $("body").height();
+        $("body").css({
+          backgroundSize: "100% " + bodyHeight + "px",
+        });
+      }
+    </script>
+  </body>
+</html>
